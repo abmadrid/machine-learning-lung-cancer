@@ -9,7 +9,7 @@ METHODS
 
 ~Data Set~
 
-The data were obtained from The Cancer Genome Atlas (https://tcga-data.nci.nih.gov/tcga/) a National Institutes of Health data portal that stores genomic data from tumorous and non-tumorous tissue. It contains a set of individuals where each individual is a collection of SNP data from lung adenocarcinoma tissue along with their corresponding normal tissue samples. There are 110 individuals with each containing a few hundred samples (several per chromosome). There are a total of 220 files: a tumorous sample and normal sample for each individual. The data fields include Sample, Chromosome, Start, End, Num_Probes, and Segment_Mean
+The data were obtained from The Cancer Genome Atlas (https://tcga-data.nci.nih.gov/tcga/) a National Institutes of Health data portal that stores genomic data from tumorous and non-tumorous tissue. It contains a set of individuals where each individual is a collection of SNP data from lung adenocarcinoma tissue along with their corresponding normal tissue samples. There are 110 individuals with each containing a few hundred samples (several per chromosome). There are a total of 220 files: a tumorous sample and normal sample for each individual. The data fields include Sample, Chromosome, Start, End, Num_Probes, and Segment_Mean.
 
 ~Preprocessing~
 
