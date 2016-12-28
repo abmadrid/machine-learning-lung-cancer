@@ -46,7 +46,7 @@ DISCUSSION
 
 ~Random Forest~
 
-The two models built using RF had accuracies of 0.8115 and 0.8296 (with 5‐fold cross validation and without, respectively). The higher accuracy of the model not using 5‐fold cross validation is interesting and implies that the model using 5‐fold cross validation may be over-fitted. As discussed above, the RF method builds multiple trees on portions of the data with all the trees averaged at the end. The oob error estimate takes care of this internally. (Breiman, 2001) In addition, the model without 5‐fold cross validation also had better ROC curve and higher AUC (0.75 versus 0.6234).
+The two models built using RF had accuracies of 0.8115 and 0.8296 (with 5‐fold cross validation and without, respectively). The higher accuracy of the model not using 5‐fold cross validation is interesting and implies that the model using 5‐fold cross validation may be over-fitted. The RF method builds multiple trees on portions of the data with all the trees averaged at the end (as discussed in "svm_vs_RF_lung_cancer.pdf"). The oob error estimate takes care of this internally. (Breiman, 2001) In addition, the model without 5‐fold cross validation also had better ROC curve and higher AUC (0.75 versus 0.6234).
 
 Both of these models listed chromosome 6 and chromosome 7 as variables of importance after seg_size, num_probes, and num_genes. Since all models created here (both RF and SVM) listed seg_size, num_probes, and num_genes as variables of importance, using chromosomes as features for prediction may not be ideal.
 
@@ -60,7 +60,7 @@ While the SVM‐polynomial model had the highest accuracy, it is too time-consum
 
 Model E took, by far, the longest time to train at 10 days. This model and Model B (RF without cross validation) had very comparable results, e.g., similar sensitivities, specificities. In addition, each of their accuracies were within 95% CI of one another. Due to the similarities of the results of these two models and the large discrepancy in their computation time, Model B is the preferred model here. As a follow-up, it would be interesting to see whether Model E’s training time could be reduced enough through distributed computation scheme that would make it the preferred model over any RF model.
 
-For additional details, please the pdf "svm_vs_RF_lung_cancer.pdf".
+For additional details, please see the pdf "svm_vs_RF_lung_cancer.pdf".
 
 REFERENCES
 
