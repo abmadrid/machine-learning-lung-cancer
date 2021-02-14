@@ -7,18 +7,18 @@ Lung cancer risk prediction is particularly difficult in that environmental fact
 
 METHODS
 
-~Data Set~
+Data Set
 
 The data were obtained from The Cancer Genome Atlas (https://tcga-data.nci.nih.gov/tcga/) a National Institutes of Health data portal that stores genomic data from tumorous and non-tumorous tissue. It contains a set of individuals where each individual is a collection of SNP data from lung adenocarcinoma tissue along with their corresponding normal tissue samples. There are 110 individuals with each containing a few hundred samples (several per chromosome). There are a total of 220 files: a tumorous sample and normal sample for each individual. The data fields include Sample, Chromosome, Start, End, Num_Probes, and Segment_Mean.
 
-~Preprocessing~
+Preprocessing
 
 The data were pre-processed in order to create a list of features for training and testing the classifiers. Those features are CHROMOSOME NUMBERS, NUMBER OF PROBES, COPY NUMBER (segment mean), NUMBER OF GENES, VALUE OF THE MOST FREQUENT GENE, and LENGTH OF SEGMENT (segment size). The CHROMOSOME NUMBER is just the number of the chromosome where the SNP is located. The NUMBER OF PROBES is the integer number of probes used in the sequencing experiment. The COPY NUMBER is the log2 ratio of the tumor intensity to the normal intensity (i.e., the segment_mean). The copy number refers to the number of copies of one or more sections of the DNA. As gene duplication occurs sometimes extra copies of a DNA segment are made altering the structure of the DNA. This copy number variation (CNV) results in the cell having an abnormal or, for certain genes, a normal the number of copies of genes. CNV has been linked to cancer progression. CNVs are measured based on the signals of the tissue intensities that are captured during the experiment.  This measurement is the segment mean and represents the log2 ratios of those intensities (Olshen 2004). The values for this feature will be converted to an absolute copy number by the transformation (2^seg_mean)*2. The NUMBER OF GENES is the count of the number genes found in the given SNP segment. The VALUE OF THE MOST FREQUENT GENE is the highest count of the gene most frequently found in that SNP segment. The LENGTH OF SEGMENT is the size of the segment (End position minus Start position).
 
 To calculate the NUMBER OF GENES and VALUE OF MOST FREQUENT GENE, 
 parsePos.R parsed each file for chromosome number, and start and end position. These three variables were used to create input files to the UCSC genome browser (http://genome.ucsc.edu/cgi-bin/hgTables). The UCSC genome browser provided output files containing chromosome, gene name, and start and end position of that gene. Using prepDataAddGenes.R, each of these UCSC output files were parsed for gene names, which were appended to the data set to be used for classification. In addition, for each tumorous sample a cancer label of “1” was added, and for each normal sample a label of “-1” was added. Using mergFiles.R, all the preprocessed data files are merged into one .csv file consisting of 65,051 samples with the six features listed above and a label of cancer or no cancer. 
 
-~Classification Models~
+Classification Models
 
 Prior to classification, the variables num_probe, num_genes, most_freq, and seg_size were normalized. Training and testing datasets were created based on a 75%-25% split. 
 
@@ -44,13 +44,13 @@ Model E was trained using the method “svmRadial”, which uses a radial kernel
 
 DISCUSSION
 
-~Random Forest~
+Random Forest
 
 The two models built using RF had accuracies of 0.8115 and 0.8296 (with 5‐fold cross validation and without, respectively). The higher accuracy of the model not using 5‐fold cross validation is interesting and implies that the model using 5‐fold cross validation may be over-fitted. The RF method builds multiple trees on portions of the data with all the trees averaged at the end (as discussed in "svm_vs_RF_lung_cancer.pdf"). The oob error estimate takes care of this internally. (Breiman, 2001) In addition, the model without 5‐fold cross validation also had better ROC curve and higher AUC (0.75 versus 0.6234).
 
 Both of these models listed chromosome 6 and chromosome 7 as variables of importance after seg_size, num_probes, and num_genes. Since all models created here (both RF and SVM) listed seg_size, num_probes, and num_genes as variables of importance, using chromosomes as features for prediction may not be ideal.
 
-~Support Vector Machine~
+Support Vector Machine
 
 The three models (C, D, and E) built using SVM had accuracies of 0.7885, 0.8309, and 0.8244 (with linear, polynomial, and radial kernels, respectively). Model C classified all observations as “cancer”, and by doing so resulted in a fairly high accuracy.
 However, this model produced an ROC and an AUC (0.5) that are essentially identical to what would be produced through random guessing.
